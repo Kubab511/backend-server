@@ -24,7 +24,7 @@ const loadUsers = async () => {
 };
 
 // Define the /login route
-app.post('/api/login', async (req, res) => {
+app.get('/api/login', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {

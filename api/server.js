@@ -7,8 +7,13 @@ const cors = require('cors');
 const app = express();
 const usersFilePath = path.join(__dirname, 'users.json');
 
-app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your React app's URL
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 
 const loadUsers = async () => {
   try {

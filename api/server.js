@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jsonfile = require('jsonfile');
 const path = require('path');
+const cors = require('cors');
 const { error } = require('console');
 
 const app = express();

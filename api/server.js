@@ -8,6 +8,7 @@ const app = express();
 const port = 3000;
 const usersFilePath = path.join(__dirname, 'users.json'); 
 
+app.use(cors());
 app.use(express.json());
 
 const loadUsers = async () => {

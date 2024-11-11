@@ -11,5 +11,6 @@
       "src": "/api/(.*)",
       "dest": "/api/server.js"
     }
-  ]
+  ],
+  "includeFiles": ["api/users.json"]
 }

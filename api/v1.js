@@ -7,7 +7,11 @@ app.use(cors());
 
 app.get('/api/v1/:request', (req, res) => {
   res.set('Content-Type', 'text/plain')
-  res.status(200).send("OK" + req.params.request);
+  if (req.params.request === 'Valhalla') {
+    res.status(200).send("OK");
+  } else {
+    res.status(404).send("Not Found");
+  }
 });
 
 module.exports = app;

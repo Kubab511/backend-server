@@ -7,11 +7,16 @@ app.use(cors());
 
 app.get('/api/v1/:request', (req, res) => {
   res.set('Content-Type', 'text/plain')
-  if (req.params.request === 'Valhalla') {
+  
+  var username = req.query.username.split("|")[0];
+  var serial = req.query.username.split("|")[1];
+
+  if (username == "Kubab511" && serial == "ABD7BE") {
     res.status(200).send("OK");
   } else {
-    res.status(404).send("Not Found");
+    res.status(404).send("Invalid username or serial");
   }
+
 });
 
 module.exports = app;

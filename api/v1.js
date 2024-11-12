@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const PORT = 3000;
 
 app.use(express.json());
 app.use(cors());
@@ -22,9 +21,4 @@ app.get('/api/v1/:request', (req, res) => {
 
 });
 
-// module.exports = app;
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = app;

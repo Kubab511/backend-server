@@ -8,10 +8,10 @@ app.use(cors());
 app.get('/api/v1/:request', (req, res) => {
   res.set('Content-Type', 'text/plain')
 
-  var drequest_body = String(req.params.request);
+  var request_body = String(req.params.request);
 
-  const username = drequest_body.split("|")[0];
-  const serial = drequest_body.split("|")[1];
+  const username = request_body.split("|")[1];
+  const serial = request_body.split("|")[0];
 
   if (username == "Kubab511" && serial == "Valhalla") {
     res.status(200).send("OK");

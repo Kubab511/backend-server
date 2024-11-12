@@ -1,8 +1,12 @@
 {
   "users": [
     {
-      "username": "admin",
-      "password": "$2b$10$x8WwzEmLkM.WlXEK5or61uXLdUM3l0aW7DDuRCR6JHwYcNYJmei4K"
+      "username": "ConiPilote",
+      "password": "Qantas32"
+    },
+    {
+      "username": "Kubab511",
+      "password": "PolyCement"
     }
   ]
 }

@@ -35,7 +35,7 @@ app.get('/api/v1/:request', async (req, res) => {
       return res.status(401).send('Invalid username or password');
     }
 
-    const isSerialValid = (serial == user.password);
+    const isSerialValid = await bcrypt.compare(serial, user.serial);
     if (!isSerialValid) {
       return res.status(401).send('Invalid username or password');
     }

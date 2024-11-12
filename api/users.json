@@ -2,11 +2,11 @@
   "users": [
     {
       "username": "ConiPilote",
-      "password": "Qantas32"
+      "password": "$2b$10$FWWtCu/95Y8wzMpdQTaehO/guv/HHZDi.fPzc6DdOIeKAQS3ktW5i"
     },
     {
       "username": "Kubab511",
-      "password": "Valhalla"
+      "password": "$2b$10$.S9QbiMmBCGcd1jbXNzvue1PzC/Aft1hVioD0q3WuL.TOPCXQuKYG"
     }
   ]
 }

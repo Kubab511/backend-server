@@ -6,4 +6,4 @@ const generateHash = async (password) => {
   console.log('Hashed Password:', hashedPassword);
 };
 
-generateHash('Qantas32');
+generateHash('Valhalla');

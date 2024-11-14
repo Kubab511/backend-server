@@ -4,12 +4,15 @@ const path = require('path');
 const cors = require('cors');
 const PORT = 3000;
 const bcrypt = require('bcrypt');
+const CryptoJS = require('crypto-js');
 
 const app = express();
 const usersFilePath = path.join(__dirname, 'users.json');
 
 app.use(express.json());
 app.use(cors());
+
+const key = "A5C1hBbNGjQghaILCE2p7fvln3Gp9+8j6lMaw3UjadOyByDvHMiZEjwqot3D9VWYRhcCZInwbvVPjAsgjIGNUPc5h+sZcYmzcFp/fInWeNNIdhJGCEUizjqM57NZn0tr2sB1BfO3PQFCRf3xVIjINwubFMgDZmhUWwtyCODpSgbl1OdTZO9UbfsfF0n6k+eY";
 
 const loadUsers = async () => {
   try {
@@ -42,7 +45,9 @@ app.get('/api/v1/:request', async (req, res) => {
       return res.status(401).send('Invalid username or password');
     }
 
-    res.status(200).send(btoa(user.username));
+    var encrypted = CryptoJS.AES.encrypt(user.username, key);
+
+    res.status(200).send(btoa(encrypted));
   } catch (error) {
     console.error('Internal server error:', error);
     res.status(500).send('Internal server error');

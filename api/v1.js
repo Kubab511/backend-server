@@ -2,6 +2,8 @@ const express = require('express');
 const jsonfile = require('jsonfile');
 const path = require('path');
 const cors = require('cors');
+const PORT = 3000;
+const bcrypt = require('bcrypt');
 
 const app = express();
 const usersFilePath = path.join(__dirname, 'users.json');
@@ -49,3 +51,6 @@ app.get('/api/v1/:request', async (req, res) => {
 });
 
 module.exports = app;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

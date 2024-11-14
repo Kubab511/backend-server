@@ -33,18 +33,16 @@ app.get('/api/v1/:request', async (req, res) => {
     const users = await loadUsers();
     const user = users.find((user) => user.username === username);
 
-    if (!user) {
+    if (!user || user.blacklisted) {
       return res.status(401).send('Invalid username or password');
     }
 
     const isSerialValid = await bcrypt.compare(serial, user.serial);
-    if (!isSerialValid || user.blacklisted) {
+    if (!isSerialValid) {
       return res.status(401).send('Invalid username or password');
     }
 
-    const hashedPassword = await bcrypt.hash(serial, 10);
-
-    res.status(200).send(hashedPassword);
+    res.status(200).send(btoa(user.username));
   } catch (error) {
     console.error('Internal server error:', error);
     res.status(500).send('Internal server error');

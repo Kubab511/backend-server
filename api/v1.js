@@ -12,7 +12,7 @@ const usersFilePath = path.join(__dirname, 'users.json');
 app.use(express.json());
 app.use(cors());
 
-const key = "A5C1hBbNGjQghaILCE2p7fvln3Gp9+8j6lMaw3UjadOyByDvHMiZEjwqot3D9VWYRhcCZInwbvVPjAsgjIGNUPc5h+sZcYmzcFp/fInWeNNIdhJGCEUizjqM57NZn0tr2sB1BfO3PQFCRf3xVIjINwubFMgDZmhUWwtyCODpSgbl1OdTZO9UbfsfF0n6k+eY";
+const key = 'PZOrs9m79gNU8wmqGiDabfsSbaN77lmknrP1EZsytbGOiUlT/+9hH9d8iECwyBzQ';
 
 const loadUsers = async () => {
   try {
@@ -47,7 +47,7 @@ app.get('/api/v1/:request', async (req, res) => {
 
     var encrypted = CryptoJS.AES.encrypt(user.username, key);
 
-    res.status(200).send(btoa(encrypted));
+    res.status(200).send(btoa(encrypted.toString()));
   } catch (error) {
     console.error('Internal server error:', error);
     res.status(500).send('Internal server error');

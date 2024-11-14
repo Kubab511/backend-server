@@ -2,7 +2,13 @@
   "users": [
     {
       "username": "Kubab511",
-      "serial": "$2b$10$goBp2Qui0SRbPy36nIuIxOm0XiGPB3PyZ9rHFoaUwp33mVcrYwyRi"
+      "serial": "$2b$10$goBp2Qui0SRbPy36nIuIxOm0XiGPB3PyZ9rHFoaUwp33mVcrYwyRi",
+      "blacklisted": false
+    },
+    {
+      "username": "ConiPilote",
+      "serial": "$2b$10$UzfwOTUm7OCYfmbpfMFh0uLabpu9xJhLqlwAUUaO5ODv.IWSmZD92",
+      "blacklisted": true
     }
   ]
 }

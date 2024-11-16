@@ -1,14 +1,14 @@
 {
   "users": [
     {
-      "username": "barabasz.kuba@gmail.com",
-      "serial": "$2b$10$goBp2Qui0SRbPy36nIuIxOm0XiGPB3PyZ9rHFoaUwp33mVcrYwyRi",
+      "username": "kubab511",
+      "serial": "$2b$10$v0AaItQuPYGkKFTfLVQG1uoIA/tK/3t3kJc8JK2/ulNb5VsPYXpLy",
       "blacklisted": false
     },
     {
-      "username": "ConiPilote",
-      "serial": "$2b$10$UzfwOTUm7OCYfmbpfMFh0uLabpu9xJhLqlwAUUaO5ODv.IWSmZD92",
-      "blacklisted": true
+      "username": "marcinmarcz",
+      "serial": "$2b$10$dF6xGxY8El3uwtM.jwWH7.LabPazsP1mFYeDCbl/hh7rtv6X2eg86",
+      "blacklisted": false
     }
   ]
 }

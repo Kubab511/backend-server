@@ -52,7 +52,7 @@ date.setDate(date.getDate() + 7);
 date.setHours(23, 59, 59, 999);
 date = date.toISOString();
 
-app.post('/api', async (req, res) => {
+app.post('/api/checkSerial', async (req, res) => {
   console.log('Received JSON data:', req.body);
   const { deviceID, serial } = req.body;
 

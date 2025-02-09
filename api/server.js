@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 const usersFilePath = path.join(__dirname, 'users.json');
 
-const key = fs.readFileSync('./private_key.pem', 'utf8');
+const key = fs.readFileSync('./api/key.pem', 'utf8');
 
 const loadUsers = async () => {
   try {

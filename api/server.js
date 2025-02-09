@@ -2,7 +2,7 @@ const express = require('express');
 const crypto = require('crypto');
 const jsonfile = require('jsonfile');
 const path = require('path');
-const PORT = 5000;
+// const PORT = 5000;
 
 const app = express();
 
@@ -84,7 +84,7 @@ app.post('/api', async (req, res) => {
   });
 });
 
-// module.exports = app;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

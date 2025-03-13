@@ -4,6 +4,7 @@ const jsonfile = require('jsonfile');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
+const axios = require('axios');
 require('dotenv').config();
 // const PORT = 5000;
 
@@ -69,7 +70,7 @@ app.post('/v1/getWeather', async (req, res) => {
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
 
   try {
-    const response = await fetch(requestUrl);
+    const response = await axios.get(requestUrl);
     if (!response.ok) {
       return res.status(response.status).json({ error: 'Error fetching weather data' });
     }

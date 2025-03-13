@@ -10,11 +10,8 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
+
 
 
 const usersFilePath = path.join(__dirname, 'users.json');
@@ -72,6 +69,8 @@ app.post('/v1/getWeather', async (req, res) => {
   const { lat, lon, lang = 'en', units = 'metric' } = req.body;
   const apiKey = process.env.WEATHER_API_KEY;
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
+
+  res.setHeader('Access-Control-Allow-Origin', 'https://barabasz.dev');
 
   try {
     const response = await fetch(requestUrl);

@@ -12,8 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
-
 const usersFilePath = path.join(__dirname, 'users.json');
 const keyPath = path.join(__dirname, 'key.pem')
 const key = fs.readFileSync(keyPath, 'utf8');
@@ -70,14 +68,13 @@ app.post('/v1/getWeather', async (req, res) => {
   const apiKey = process.env.WEATHER_API_KEY;
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
 
-  res.setHeader('Access-Control-Allow-Origin', 'https://jakub.barabasz.dev');
-
   try {
     const response = await fetch(requestUrl);
     if (!response.ok) {
       return res.status(response.status).json({ error: 'Error fetching weather data' });
     }
     const weatherData = await response.json();
+    res.set('Access-Control-Allow-Origin', '*');
     res.json(weatherData);
   } catch (error) {
     console.error('Error fetching weather data:', error);

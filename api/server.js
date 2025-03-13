@@ -11,7 +11,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 
 const usersFilePath = path.join(__dirname, 'users.json');
 const keyPath = path.join(__dirname, 'key.pem')

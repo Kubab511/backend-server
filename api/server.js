@@ -70,7 +70,7 @@ app.post('/v1/getWeather', async (req, res) => {
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
 
   try {
-    const response = await axios.get(requestUrl);
+    const response = await fetch(requestUrl);
     if (!response.ok) {
       return res.status(response.status).json({ error: 'Error fetching weather data' });
     }

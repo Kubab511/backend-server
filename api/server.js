@@ -74,7 +74,6 @@ app.post('/v1/getWeather', async (req, res) => {
       return res.status(response.status).json({ error: 'Error fetching weather data' });
     }
     const weatherData = await response.json();
-    res.set('Access-Control-Allow-Origin', '*');
     res.json(weatherData);
   } catch (error) {
     console.error('Error fetching weather data:', error);

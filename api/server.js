@@ -4,15 +4,13 @@ const jsonfile = require('jsonfile');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
-const axios = require('axios');
 require('dotenv').config();
-// const PORT = 5000;
+const PORT = 5000;
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.options('/', cors());
 
 const usersFilePath = path.join(__dirname, 'users.json');
 const keyPath = path.join(__dirname, 'key.pem')
@@ -66,7 +64,7 @@ app.post('/v1/checkSerial', async (req, res) => {
 });
 
 app.post('/v1/getWeather', async (req, res) => {
-  const { lat, lon, lang = 'en', units = 'metric' } = req.body;
+  const { lat = 53.35, lon = -6.27, lang = 'en', units = 'metric' } = req.body;
   const apiKey = process.env.WEATHER_API_KEY;
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
 
@@ -83,9 +81,7 @@ app.post('/v1/getWeather', async (req, res) => {
   }
 });
 
-
-
-module.exports = app;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+// module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

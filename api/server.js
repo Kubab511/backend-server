@@ -11,7 +11,8 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
+app.options('*', cors());
 
 const usersFilePath = path.join(__dirname, 'users.json');
 const keyPath = path.join(__dirname, 'key.pem')
@@ -81,6 +82,8 @@ app.post('/v1/getWeather', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
 
 module.exports = app;
 // app.listen(PORT, () => {

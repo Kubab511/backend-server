@@ -1,3 +1,4 @@
 node_modules
 generateHash.js
 decrypt.js
+*.env

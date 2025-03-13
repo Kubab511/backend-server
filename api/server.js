@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.options('*', cors());
+app.options('/', cors());
 
 const usersFilePath = path.join(__dirname, 'users.json');
 const keyPath = path.join(__dirname, 'key.pem')

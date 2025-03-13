@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
 require('dotenv').config();
-const PORT = 5000;
+// const PORT = 5000;
 
 const app = express();
 
@@ -87,7 +87,7 @@ app.post('/v1/getWeather', async (req, res) => {
   }
 });
 
-// module.exports = app;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

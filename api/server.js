@@ -9,8 +9,14 @@ const PORT = 5000;
 
 const app = express();
 
+const corsOptions = {
+  origin: '*', // Allow all origins (or specify frontend URL)
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 const usersFilePath = path.join(__dirname, 'users.json');
 const keyPath = path.join(__dirname, 'key.pem')

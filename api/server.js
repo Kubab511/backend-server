@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const jsonfile = require('jsonfile');
 const path = require('path');
 const fs = require('fs');
+require('dotenv').config();
 // const PORT = 5000;
 
 const app = express();
@@ -58,6 +59,24 @@ app.post('/api/checkSerial', async (req, res) => {
     },
     signature: signature
   });
+});
+
+app.post('/api/getWeather', async (req, res) => {
+  const { lat, lon, lang = 'en', units = 'metric' } = req.body;
+  const apiKey = process.env.WEATHER_API_KEY;
+  const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
+
+  try {
+    const response = await fetch(requestUrl);
+    if (!response.ok) {
+      return res.status(response.status).json({ error: 'Error fetching weather data' });
+    }
+    const weatherData = await response.json();
+    res.json(weatherData);
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 module.exports = app;

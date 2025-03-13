@@ -30,7 +30,6 @@ date.setHours(23, 59, 59, 999);
 date = date.toISOString();
 
 app.post('/v1/checkSerial', async (req, res) => {
-  console.log('Received JSON data:', req.body);
   const { deviceID, serial } = req.body;
 
   const users = await loadUsers();
@@ -62,7 +61,7 @@ app.post('/v1/checkSerial', async (req, res) => {
 });
 
 app.post('/v1/getWeather', async (req, res) => {
-  const { lat, lon, lang = 'en', units = 'metric' } = req.body;
+  const { lat = 52.25, lon = -6.27, lang = 'en', units = 'metric' } = req.body;
   const apiKey = process.env.WEATHER_API_KEY;
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
 

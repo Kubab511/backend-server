@@ -12,11 +12,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-})
 
 const usersFilePath = path.join(__dirname, 'users.json');
 const keyPath = path.join(__dirname, 'key.pem')

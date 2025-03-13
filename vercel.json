@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/v1/(.*)",
-      "dest": "/api/server.js",
+      "dest": "/v1/server.js",
       "methods": ["POST"]
     }
   ]

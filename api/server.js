@@ -10,7 +10,11 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 
 const usersFilePath = path.join(__dirname, 'users.json');

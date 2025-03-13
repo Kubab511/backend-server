@@ -70,7 +70,7 @@ app.post('/v1/getWeather', async (req, res) => {
   const apiKey = process.env.WEATHER_API_KEY;
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
 
-  res.setHeader('Access-Control-Allow-Origin', 'https://barabasz.dev');
+  res.setHeader('Access-Control-Allow-Origin', 'https://jakub.barabasz.dev');
 
   try {
     const response = await fetch(requestUrl);

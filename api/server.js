@@ -83,3 +83,6 @@ app.post('/v1/getWeather', async (req, res) => {
 });
 
 module.exports = app;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

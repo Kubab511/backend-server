@@ -69,8 +69,8 @@ app.post('/v1/checkSerial', async (req, res) => {
   });
 });
 
-app.post('/v1/getWeather', async (req, res) => {
-  const { lat = 53.35, lon = -6.27, lang = 'en', units = 'metric' } = req.body;
+app.get('/v1/weather', async (req, res) => {
+  const { lat = 53.35, lon = -6.27, lang = 'en', units = 'metric' } = req.query;
   const apiKey = process.env.WEATHER_API_KEY;
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&appid=${apiKey}`;
 

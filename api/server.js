@@ -92,18 +92,6 @@ app.get('/auth', (req, res) => {
   res.statusCode(200);
 });
 
-app.get('/auth2', (req, res) => {
-  const { request, user, orderid, authcode, version, productid, time } = req.query;
-  console.log('Request:', request);
-  console.log('User:', user);
-  console.log('Order ID:', orderid);
-  console.log('Auth Code:', authcode);
-  console.log('Version:', version);
-  console.log('Product ID:', productid);
-  console.log('Time:', time);
-});
-
-
 // module.exports = app;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

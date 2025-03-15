@@ -4,8 +4,9 @@ const jsonfile = require('jsonfile');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
+const axios = require('axios');
 require('dotenv').config();
-// const PORT = 5000;
+// const PORT = 8080;
 
 const app = express();
 
@@ -86,6 +87,41 @@ app.get('/v1/weather', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.get('/auth', (req, res) => {
+  const { request, user, orderid, authcode, version, productid, time } = req.query;
+  
+  axios.get('http://localhost:8080/auth2', {
+    params: {
+      request: request,
+      user: user,
+      orderid: orderid,
+      authcode: authcode,
+      version: version,
+      productid: productid,
+      time: time
+    }
+  })
+  .then(response => {
+    res.json(response.data);
+  })
+  .catch(error => {
+    console.error('Error making request to /auth2:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  });
+});
+
+app.get('/auth2', (req, res) => {
+  const { request, user, orderid, authcode, version, productid, time } = req.query;
+  console.log('Request:', request);
+  console.log('User:', user);
+  console.log('Order ID:', orderid);
+  console.log('Auth Code:', authcode);
+  console.log('Version:', version);
+  console.log('Product ID:', productid);
+  console.log('Time:', time);
+});
+
 
 module.exports = app;
 // app.listen(PORT, () => {

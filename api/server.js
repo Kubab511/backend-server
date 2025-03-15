@@ -6,7 +6,7 @@ const fs = require('fs');
 const cors = require('cors');
 const axios = require('axios');
 require('dotenv').config();
-// const PORT = 8080;
+const PORT = 8080;
 
 const app = express();
 
@@ -89,26 +89,7 @@ app.get('/v1/weather', async (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  const { request, user, orderid, authcode, version, productid, time } = req.query;
-  
-  axios.get('http://localhost:8080/auth2', {
-    params: {
-      request: request,
-      user: user,
-      orderid: orderid,
-      authcode: authcode,
-      version: version,
-      productid: productid,
-      time: time
-    }
-  })
-  .then(response => {
-    res.json(response.data);
-  })
-  .catch(error => {
-    console.error('Error making request to /auth2:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  });
+  res.statusCode(200);
 });
 
 app.get('/auth2', (req, res) => {
@@ -123,7 +104,7 @@ app.get('/auth2', (req, res) => {
 });
 
 
-module.exports = app;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+// module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

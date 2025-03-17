@@ -1,4 +1,5 @@
 node_modules
-generateHash.js
-decrypt.js
 *.env
+*.pem
+users.json
+server2.js

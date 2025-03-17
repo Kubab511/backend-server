@@ -1,5 +1,5 @@
 {
-  "name": "licensing-server",
+  "name": "backend-server",
   "version": "1.0.0",
   "main": "api/server.js",
   "scripts": {

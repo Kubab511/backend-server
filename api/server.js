@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const jsonfile = require('jsonfile');
 const path = require('path');
 const fs = require('fs');
+const xml2js = require('xml2js');
 require('dotenv').config();
 
 const app = express();

@@ -84,4 +84,63 @@ app.post('/v1/checkSerial', async (req, res) => {
   });
 });
 
+app.get('/v1/luas', async (req, res) => {
+  const { action = 'forecast', stop, encrypt = 'false', format = 'json' } = req.query;
+  
+  if (!stop) {
+    return res.status(400).json({ error: 'Stop parameter is required' });
+  }
+  
+  const requestURL = `https://luasforecasts.rpa.ie/xml/get.ashx?action=${action}&stop=${stop}&encrypt=${encrypt}`;
+
+  try {
+    const response = await fetch(requestURL);
+    const xmlText = await response.text();
+    
+    if (format === 'xml') {
+      return res.status(200).type('text/xml').send(xmlText);
+    }
+    
+    const result = await parser.parseStringPromise(xmlText);
+    const stopInfo = result.stopInfo;
+    
+    const jsonResponse = {
+      stop: {
+        name: stopInfo.$.stop,
+        abbreviation: stopInfo.$.stopAbv,
+        created: stopInfo.$.created
+      },
+      message: stopInfo.message || null,
+      directions: []
+    };
+    
+    const directions = Array.isArray(stopInfo.direction) ? stopInfo.direction : [stopInfo.direction];
+    
+    directions.forEach(direction => {
+      if (direction) {
+        const directionData = {
+          name: direction.$.name,
+          trams: []
+        };
+        
+        if (direction.tram) {
+          const trams = Array.isArray(direction.tram) ? direction.tram : [direction.tram];
+          directionData.trams = trams.map(tram => ({
+            dueMins: parseInt(tram.$.dueMins) || tram.$.dueMins,
+            destination: tram.$.destination
+          }));
+        }
+        
+        jsonResponse.directions.push(directionData);
+      }
+    });
+    
+    res.status(200).json(jsonResponse);
+    
+  } catch (error) {
+    console.error('Error fetching or parsing Luas data:', error);
+    res.status(500).json({ error: `Internal server error: ${error.message}` });
+  }
+});
+
 module.exports = app;

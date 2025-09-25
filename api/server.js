@@ -29,6 +29,8 @@ const loadUsers = async () => {
   }
 };
 
+const parser = new xml2js.Parser({ explicitArray: false });
+
 app.use(express.json());
 app.use(cors(corsOptions));
 

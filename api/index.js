@@ -1,32 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const crypto = require('crypto');
-const jsonfile = require('jsonfile');
-const path = require('path');
-const fs = require('fs');
 const xml2js = require('xml2js');
 require('dotenv').config();
 
 const app = express();
 
 const corsOptions = {
-  origin: '*', // Allow all origins (or specify frontend URL)
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization',
-};
-
-const usersFilePath = path.join(__dirname, 'users.json');
-const keyPath = path.join(__dirname, 'key.pem')
-const key = fs.readFileSync(keyPath, 'utf8');
-
-const loadUsers = async () => {
-  try {
-    const data = await jsonfile.readFile(usersFilePath);
-    return data.users;
-  } catch (error) {
-    console.error('Error reading users.json:', error);
-    throw error;
-  }
 };
 
 const parser = new xml2js.Parser({ explicitArray: false });
@@ -50,41 +32,6 @@ app.get('/v1/weather', async (req, res) => {
     console.error('Error fetching weather data:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-});
-
-app.post('/v1/checkSerial', async (req, res) => {
-  const { deviceID, serial } = req.body;
-
-  const users = await loadUsers();
-  const user = users.find((user) => user.deviceID === deviceID && user.serial === serial);
-
-  if (!user) {
-    return res.status(401).send("");
-  }
-
-  var date = new Date();
-  date.setDate(date.getDate() + 7);
-  date.setHours(23, 59, 59, 999);
-  date = date.toISOString();
-  
-  let data = {
-    deviceID: deviceID,
-    expirationDate: date
-  };
-  data = JSON.stringify(data);
-
-  const sign = crypto.createSign('sha256');
-  sign.update(data);
-  sign.end();
-  const signature = sign.sign(key, 'base64');
-
-  res.json({
-    data: {
-      deviceID: deviceID,
-      expirationDate: date
-    },
-    signature: signature
-  });
 });
 
 app.get('/v1/luas', async (req, res) => {
@@ -145,5 +92,13 @@ app.get('/v1/luas', async (req, res) => {
     res.status(500).json({ error: `Internal server error: ${error.message}` });
   }
 });
+
+// Start server
+const PORT = process.env.PORT || 3000;
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
 module.exports = app;

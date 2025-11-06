@@ -6,9 +6,17 @@ require('dotenv').config();
 const app = express();
 
 const corsOptions = {
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  origin: (origin, callback) => {
+    const allowedPattern = /^https?:\/\/[\w\-]+\.barabasz\.dev$/i;
+    if (!origin || allowedPattern.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET',
   allowedHeaders: 'Content-Type, Authorization',
+  credentials: true,
 };
 
 const parser = new xml2js.Parser({ explicitArray: false });

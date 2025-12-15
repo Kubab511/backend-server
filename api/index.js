@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const xml2js = require('xml2js');
+const db = require('./db.ts');
 require('dotenv').config();
 
 const app = express();
@@ -14,7 +15,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: 'GET',
+  methods: ['GET', 'POST'],
   allowedHeaders: 'Content-Type, Authorization',
   credentials: true,
 };
@@ -98,6 +99,65 @@ app.get('/v1/luas', async (req, res) => {
   } catch (error) {
     console.error('Error fetching or parsing Luas data:', error);
     res.status(500).json({ error: `Internal server error: ${error.message}` });
+  }
+});
+
+app.get('/v1/setup/deer', async (req, res) => {
+  try {
+    await db.none(`
+      DROP TABLE IF EXISTS deer;
+      CREATE TABLE deer (
+        id SERIAL PRIMARY KEY,
+        created_at TIMESTAMP,
+        lat REAL,
+        lon REAL
+      );
+    `);
+    res.status(200).json({ message: 'Table deer created successfully' });
+  } catch (error) {
+    console.error('Error creating deer table:', error);
+    res.status(500).json({ error: `Failed to create table: ${error.message}` });
+  }
+});
+
+app.post('/v1/deer/report', async (req, res) => {
+  try {
+    const { lat, lon, created_at } = req.body;
+
+    if (typeof lat !== 'number' || typeof lon !== 'number') {
+      return res.status(400).json({ error: 'lat and lon are required and must be numbers' });
+    }
+
+    let createdAt = created_at ? new Date(created_at) : new Date();
+    if (isNaN(createdAt.getTime())) {
+      return res.status(400).json({ error: 'created_at must be a valid date if provided' });
+    }
+
+    const report = await db.one(
+      'INSERT INTO deer (created_at, lat, lon) VALUES ($1, $2, $3) RETURNING id, created_at, lat, lon',
+      [createdAt, lat, lon]
+    );
+
+    res.status(201).json({ report });
+  } catch (error) {
+    console.error('Error creating report: ', error);
+    res.status(500).json({ error: `Error creating report: ${error.message}` });
+  }
+});
+
+app.get('/v1/deer/reports/today', async (req, res) => {
+  try {
+    const reports = await db.any(
+      `SELECT id, created_at, lat, lon FROM deer
+       WHERE created_at >= date_trunc('day', now())
+         AND created_at < date_trunc('day', now()) + interval '1 day'
+       ORDER BY created_at DESC`
+    );
+
+    res.status(200).json({ reports });
+  } catch (error) {
+    console.error('Error fetching today reports:', error);
+    res.status(500).json({ error: `Error fetching reports: ${error.message}` });
   }
 });
 

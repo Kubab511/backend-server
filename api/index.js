@@ -145,6 +145,37 @@ app.post('/v1/deer/report', async (req, res) => {
   }
 });
 
+app.get('/v1/deer/reports', async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  try {
+    const [reports, { count }] = await Promise.all([
+      db.any(
+        'SELECT id, created_at, lat, lon FROM deer ORDER BY created_at DESC LIMIT $1 OFFSET $2',
+        [limit, offset]
+      ),
+      db.one('SELECT COUNT(*) FROM deer')
+    ]);
+
+    const total = parseInt(count);
+
+    res.json({
+      reports,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching reports:', error);
+    res.status(500).json({ error: `Failed to fetch reports: ${error.message}` });
+  }
+});
+
 app.get('/v1/deer/reports/today', async (req, res) => {
   try {
     const reports = await db.any(

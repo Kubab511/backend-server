@@ -9,7 +9,7 @@ const app = express();
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedPattern = /^https?:\/\/[\w\-]+\.barabasz\.dev$/i;
-    if (!origin || allowedPattern.test(origin)) {
+    if (!origin || allowedPattern.test(origin) || origin === 'http://localhost:4200') {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));

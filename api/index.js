@@ -15,7 +15,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'DELETE'],
   allowedHeaders: 'Content-Type, Authorization',
   credentials: true,
 };
@@ -158,6 +158,30 @@ app.get('/v1/deer/reports/today', async (req, res) => {
   } catch (error) {
     console.error('Error fetching today reports:', error);
     res.status(500).json({ error: `Error fetching reports: ${error.message}` });
+  }
+});
+
+app.delete('/v1/deer/reports/remove/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    if (!id) {
+      return res.status(400).json({ error: 'ID is required' });
+    }
+
+    const removed = await db.oneOrNone(
+      'DELETE FROM deer WHERE id = $1 RETURNING id, created_at, lat, lon',
+      [id]
+    );
+
+    if (!removed) {
+      return res.status(404).json({ error: 'Report not found' });
+    }
+
+    res.status(200).json({ removed });
+  } catch (error) {
+    console.error('Error removing report:', error);
+    res.status(500).json({ error: `Error removing report: ${error.message}` });
   }
 });
 

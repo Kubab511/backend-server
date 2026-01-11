@@ -216,6 +216,30 @@ app.delete('/v1/deer/reports/remove/:id', async (req, res) => {
   }
 });
 
+app.post('/v1/tfdi/verify', async (req, res) => {
+  const { activationCode } = req.query;
+  
+  if (activationCode == null)
+    res.status(400).json({ success: false, message: 'Missing activation code' });
+
+  const serial = Math.floor(Math.random() * 1000) + 1;
+  
+  const successResponse = {
+    success: true,
+    channel: "ce",
+    types: {
+      collector: true,
+      extendedSim: true,
+      pax: true,
+      cargo: true,
+      fs24: true
+    },
+    serial
+  };
+  
+  res.status(200).json(successResponse);
+});
+
 // Start server
 const PORT = process.env.PORT || 3000;
 if (require.main === module) {

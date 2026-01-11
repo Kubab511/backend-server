@@ -23,6 +23,7 @@ const corsOptions = {
 const parser = new xml2js.Parser({ explicitArray: false });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 
 app.get('/v1/weather', async (req, res) => {
@@ -217,13 +218,14 @@ app.delete('/v1/deer/reports/remove/:id', async (req, res) => {
 });
 
 app.post('/v1/tfdi/verify', async (req, res) => {
-  const { activationCode } = req.query;
-  
-  if (activationCode == null)
-    res.status(400).json({ success: false, message: 'Missing activation code' });
+  const activationCode = req.body.activationCode;
+
+  if (activationCode == null) {
+    return res.status(400).json({ success: false, message: 'Missing activation code' });
+  }
 
   const serial = Math.floor(Math.random() * 1000) + 1;
-  
+
   const successResponse = {
     success: true,
     channel: "ce",
@@ -236,7 +238,7 @@ app.post('/v1/tfdi/verify', async (req, res) => {
     },
     serial
   };
-  
+
   res.status(200).json(successResponse);
 });
 

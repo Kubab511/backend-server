@@ -6,25 +6,27 @@ require('dotenv').config();
 
 const app = express();
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    const allowedPattern = /^https?:\/\/[\w\-]+\.barabasz\.dev$/i;
-    if (!origin || allowedPattern.test(origin) || origin === 'http://localhost:4200') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'DELETE'],
-  allowedHeaders: 'Content-Type, Authorization',
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     const allowedPattern = /^https?:\/\/[\w\-]+\.barabasz\.dev$/i;
+//     if (!origin || allowedPattern.test(origin) || origin === 'http://localhost:4200') {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   methods: ['GET', 'POST', 'DELETE'],
+//   allowedHeaders: 'Content-Type, Authorization',
+//   credentials: true,
+// };
+
+
 
 const parser = new xml2js.Parser({ explicitArray: false });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.get('/v1/weather', async (req, res) => {
   const { lat = 53.35, lon = -6.27, lang = 'en', units = 'metric' } = req.query;
